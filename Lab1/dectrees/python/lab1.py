@@ -49,11 +49,12 @@ def assignment5():
         t = d.buildTree(monk_datasets[i], m.attributes)
         table_data.append([dataset_names[i], d.check(t, monk_datasets[i]), d.check(t, monk_test_datasets[i])])
         i += 1
-    headers = ["Dataset", "Etrain", "Etest"]
+    headers = ["Dataset", "E-train", "E-test"]
     print(tabulate(table_data, headers=headers, tablefmt="grid"))
 
 
 # Assignment 7
+
 
 def main():
     # Assignment 1

@@ -104,8 +104,27 @@ Every time we split the data using an attribute, the goal is to reduce uncertain
 
 We see in the information gain formula and the image that when information gain is maximized, the entropy is minimized (often reaching zero in some subsets). Information gain directly measures how much uncertainty is reduced after each split and is therefore an effective heuristic. By choosing the attribute that maximizes information gain, we ensure that the decision tree makes the most progress toward classifying the data accurately and efficiently.
 
-### Conclusion
+### Question 6
 
-...
+Explain pruning from a bias variance trade-off perspective
+
+#### Answer
+
+Pruning is a technic which helps the bias-variance trade-off by simplifying a decision tree. Without pruning, a decision tree can become very complex and over fit the training data. This means that the tree is too specific to the training data and will not generalize well to new data. This is a high variance problem. Pruning introduces more bias by simplifying the trees which in turn reduces variance, this then improves the model's generalization to new data.
+
+### Question 7
+
+Evaluate the effect pruning has on the test error for
+the monk1 and monk3 datasets, in particular determine the optimal
+partition into training and pruning by optimizing the parameter
+fraction. Plot the classification error on the test sets as a function
+of the parameter fraction ∈{0.3, 0.4, 0.5, 0.6, 0.7, 0.8}.
+Note that the split of the data is random. We therefore need to
+compute the statistics over several runs of the split to be able to draw
+any conclusions. Reasonable statistics includes mean and a measure
+of the spread. Do remember to print axes labels, legends and data
+points as you will not pass without them.
+
+#### Answer
 
 ### References
