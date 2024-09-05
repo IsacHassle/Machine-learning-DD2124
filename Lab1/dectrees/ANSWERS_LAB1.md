@@ -85,7 +85,24 @@ Maybe add the function to determine the best attribute to split on
 
 ### Question 5
 
-...
+For splitting we choose the attribute that maximizes
+the information gain, Eq.3. Looking at Eq.3 how does the entropy of
+the subsets, Sk, look like when the information gain is maximized?
+How can we motivate using the information gain as a heuristic for
+picking an attribute for splitting? Think about reduction in entropy
+after the split and what the entropy implies
+
+#### Answer
+
+When the information gain is maximized Sk (entropy of the subset) will be minimized.
+
+![Screenshot](images/Screenshot%202024-09-05%20at%2017.09.26.png)
+
+In the image taken from https://www.youtube.com/watch?v=ZVR2Way4nwQ we can see how a decision tree splits data into smaller and smaller subsets. The goal of each split is to reduce the entropy.
+
+Every time we split the data using an attribute, the goal is to reduce uncertainty (entropy) as much as possible. The attribute that provides the highest information gain is the one that most effectively reduces this uncertainty. This is why it is a good heuristic for splitting.
+
+We see in the information gain formula and the image that when information gain is maximized, the entropy is minimized (often reaching zero in some subsets). Information gain directly measures how much uncertainty is reduced after each split and is therefore an effective heuristic. By choosing the attribute that maximizes information gain, we ensure that the decision tree makes the most progress toward classifying the data accurately and efficiently.
 
 ### Conclusion
 
