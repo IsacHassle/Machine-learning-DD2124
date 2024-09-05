@@ -77,6 +77,12 @@ at the root node
 
 run lab1.py for answer
 
+A5
+A6
+A2
+
+Maybe add the function to determine the best attribute to split on
+
 ### Question 5
 
 ...
