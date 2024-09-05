@@ -65,7 +65,17 @@ An example of a non-uniform distribution is a dataset where one class is much mo
 
 ### Question 4
 
-...
+Use the function averageGain (defined in dtree.py)
+to calculate the expected information gain corresponding to each of
+the six attributes. Note that the attributes are represented as in-
+stances of the class Attribute (defined in monkdata.py) which you
+can access via m.attributes[0], ..., m.attributes[5]. Based on
+the results, which attribute should be used for splitting the examples
+at the root node
+
+#### Answer
+
+run lab1.py for answer
 
 ### Question 5
 
