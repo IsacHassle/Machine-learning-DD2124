@@ -27,10 +27,14 @@ The key difference is that in MONK-2, all conditions must be true for a correct 
 ### Question 2
 
 The file dtree.py defines a function entropy which
-calculates the entropy of a dataset. Import this file along with the
-monks datasets and use it to calculate the entropy of the training
+calculates the entropy of a dataset. Import this file along with the monks datasets and use it to calculate the entropy of the training
 datasets
-...
+
+#### Answer
+
+    Entropy of MONK-1: 1.0
+    Entropy of MONK-2: 0.957117428264771
+    Entropy of MONK-3: 0.9998061328047111
 
 ### Question 3
 
