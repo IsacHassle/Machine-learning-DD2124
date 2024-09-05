@@ -38,7 +38,30 @@ datasets
 
 ### Question 3
 
-...
+Explain entropy for a uniform distribution and a
+non-uniform distribution, present some example distributions with
+high and low entropy
+
+#### Answer
+
+Entropy formula for binary classification problems:
+
+    Entropy(S) = -P0 * log2(P0) - P1 * log2(P1)
+
+In short, entropy is used to measure the uncertainty of a set dataset. The higher the entropy the more uncertain the data is, with lower entropy the data is more certain to predict.
+
+A uniform distribution means that all classes are equally represented in the dataset. This means that the entropy is at its maximum, 1 (when we deal with binary problems). An example of a uniform distribution is a coin toss, since each side has an equal chance of being tossed.
+
+    P0 = 0.5
+    P1 = 0.5
+    Entropy = -0.5 * log2(0.5) - 0.5 * log2(0.5) = 1
+
+An example of a non-uniform distribution is a dataset where one class is much more common than the others. If you have a box with 90% red balls and 10% blue, the entropy will be lower because there is less uncertainty.
+
+    P0 = 0.9
+    P1 = 0.1
+
+    Entropy = -0.9 * log2(0.9) - 0.1 * log2(0.1) = 0.47
 
 ### Question 4
 
