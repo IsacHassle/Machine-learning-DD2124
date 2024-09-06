@@ -27,8 +27,8 @@ def assignment3():
     
     table_data = []
     i = 0
-    for dataset in monk_datasets:
-        information_gains = [d.averageGain(dataset, attribute) for attribute in m.attributes]
+    for _ in monk_datasets:
+        information_gains = [d.averageGain(monk_datasets[i], attribute) for attribute in m.attributes]
         
         table_data.append([dataset_names[i]] + information_gains)
         i += 1
@@ -45,7 +45,7 @@ def assignment5():
 
     table_data = []
     i = 0
-    for dataset in monk_datasets:
+    for _ in monk_datasets:
         t = d.buildTree(monk_datasets[i], m.attributes)
         table_data.append([dataset_names[i], d.check(t, monk_datasets[i]), d.check(t, monk_test_datasets[i])])
         i += 1
@@ -54,6 +54,31 @@ def assignment5():
 
 
 # Assignment 7
+
+import random
+
+def partition(data, fraction):
+    ldata = list(data)
+    random.shuffle(ldata)
+    breakPoint = int(len(ldata) * fraction)
+    return ldata[:breakPoint], ldata[breakPoint:]
+
+def evaluate(tree, val_data):
+    return d.check(tree, val_data)
+
+
+def assignment7():
+
+    table_data = []
+    for fraction in [0.3, 0.4, 0.5, 0.6, 0.7, 0.8]:
+        monk1train, monk1val = partition(m.monk1, fraction)
+        monk3train, monk3val = partition(m.monk3, fraction)
+
+        t1 = d.buildTree(monk1train, m.attributes)
+        t3 = d.buildTree(monk3train, m.attributes)
+        
+
+
 
 
 def main():
@@ -65,6 +90,9 @@ def main():
 
     # Assignment 5
     assignment5()
+
+    # Assignment 7
+    assignment7()
 
 if __name__ == "__main__":
     main()
