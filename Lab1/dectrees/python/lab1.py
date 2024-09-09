@@ -104,35 +104,43 @@ def prune_trees(data, test_data, num_runs=1000):
     return fractions, mean_errors, std_errors
 
 def assignment7():
-    # Run for monk1 dataset
-    fractions, mean_errors_monk1, std_errors_monk1 = prune_trees(monk1, m.monk1test, num_runs=1000)
-    # Run for monk3 dataset
-    fractions, mean_errors_monk3, std_errors_monk3 = prune_trees(monk3, m.monk3test, num_runs=1000)
+    # Evaluate pruning for MONK-1 dataset
+    fractions, mean_errors_monk1, std_errors_monk1 = prune_trees(m.monk1, m.monk1test, num_runs=1000)
 
-    # Plot for monk1
-    plt.plot(fractions, mean_errors_monk1, marker='o', label='MONK1')
-    # Plot for monk3
-    plt.plot(fractions, mean_errors_monk3, marker='o', label='MONK3')
+    # Evaluate pruning for MONK-3 dataset
+    fractions, mean_errors_monk3, std_errors_monk3 = prune_trees(m.monk3, m.monk3test, num_runs=1000)
 
-    plt.xlabel('Fraction of Training Data')
-    plt.ylabel('Mean Error')
-    plt.title('Pruning Performance vs Fraction of Training Data')
+    # Print the mean errors and standard deviations for MONK-1
+    print(f"Results for MONK-1:")
+    print(f"{'Fraction':<10} {'Mean Error':<15} {'Std Deviation'}")
+    for fraction, mean, std in zip(fractions, mean_errors_monk1, std_errors_monk1):
+        print(f"{fraction:<10} {mean:<15.6f} {std:.6f}")
+    
+    # Print the mean errors and standard deviations for MONK-3
+    print(f"\nResults for MONK-3:")
+    print(f"{'Fraction':<10} {'Mean Error':<15} {'Std Deviation'}")
+    for fraction, mean, std in zip(fractions, mean_errors_monk3, std_errors_monk3):
+        print(f"{fraction:<10} {mean:<15.6f} {std:.6f}")
+    
+    # Plot the mean test errors for MONK-1
+    plt.plot(fractions, mean_errors_monk1, '-o', color='#49abc2', label='MONK-1')
+
+    # Add lines for standard deviation for MONK-1
+    plt.errorbar(fractions, mean_errors_monk1, yerr=std_errors_monk1, fmt='o', color='#49abc2', capsize=5)
+
+    # Plot the mean test errors for MONK-3
+    plt.plot(fractions, mean_errors_monk3, '-o', color='#fe5f55', label='MONK-3')
+
+    # Add lines for standard deviation for MONK-3
+    plt.errorbar(fractions, mean_errors_monk3, yerr=std_errors_monk3, fmt='o', color='#fe5f55', capsize=5)
+
+    # Add labels and titles
+    plt.title("Pruned Tree Performance on MONK-1 and MONK-3")
+    plt.xlabel("Fraction")
+    plt.ylabel("Mean Error")
     plt.legend()
     plt.grid(True)
     plt.show()
-
-        # Plot standard deviations for monk1 and monk3
-    plt.figure(figsize=(10, 5))
-    plt.plot(fractions, std_errors_monk1, marker='o', label='MONK1 Std Error')
-    plt.plot(fractions, std_errors_monk3, marker='o', label='MONK3 Std Error')
-
-    plt.xlabel('Fraction of Training Data')
-    plt.ylabel('Standard Deviation of Error')
-    plt.title('Pruning Performance vs Fraction of Training Data (Standard Deviation)')
-    plt.legend()
-    plt.grid(True)
-    plt.show()
-
     
 
 def main():
@@ -147,6 +155,9 @@ def main():
 
     # Assignment 7
     assignment7()
+
+
+
 
 # Call main
 if __name__ == '__main__':
