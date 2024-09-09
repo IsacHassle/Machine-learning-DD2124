@@ -17,9 +17,6 @@ def assignment1():
         i += 1
     headers = ["Dataset", "Entropy"]
     print(tabulate(table_data, headers=headers, tablefmt="grid"))
-        
-        
-
 
 
 # Assignment 3
@@ -27,7 +24,7 @@ def assignment3():
     
     table_data = []
     i = 0
-    for _ in monk_datasets:
+    for dataset in monk_datasets:
         information_gains = [d.averageGain(monk_datasets[i], attribute) for attribute in m.attributes]
         
         table_data.append([dataset_names[i]] + information_gains)
@@ -53,46 +50,88 @@ def assignment5():
     print(tabulate(table_data, headers=headers, tablefmt="grid"))
 
 
-# Assignment 7
-
 import random
+import numpy as np
+import matplotlib.pyplot as plt
+import monkdata as m
+import dtree as d
 
 def partition(data, fraction):
+    """
+    Partition the dataset into training and validation sets based on the given fraction.
+    """
     ldata = list(data)
     random.shuffle(ldata)
     breakPoint = int(len(ldata) * fraction)
     return ldata[:breakPoint], ldata[breakPoint:]
 
-def evaluate(tree, val_data):
-    return d.check(tree, val_data)
+# Load the datasets
+monk1 = m.monk1
+monk3 = m.monk3
 
+def prune_trees(data, test_data, num_runs=1000):
+    fractions = [0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
+    mean_errors = []
+
+    # For each fraction, we will collect errors across num_runs
+    for frac in fractions:
+        errors = []  # To store errors for each run
+        for i in range(num_runs):
+            # Partition the data into training and validation sets
+            train, validation = partition(data, frac)
+            # Build the tree
+            tree = d.buildTree(train, m.attributes)
+            # Prune the tree
+            pruned_tree = d.allPruned(tree)
+            # Check the performance of the tree on the validation
+            best_performance = d.check(tree, validation)
+
+            tree_best = tree
+            # Find the best pruned tree
+            for t in pruned_tree:
+                temp_performance = d.check(t, validation)
+                if temp_performance > best_performance:
+                    best_performance = temp_performance
+                    tree_best = t
+            # Add the best pruned tree's error on the test set
+            errors.append(1 - d.check(tree_best, test_data))
+        
+        # Calculate the mean error for this fraction
+        mean_errors.append(np.mean(errors))
+
+    return fractions, mean_errors
 
 def assignment7():
+    # Run for monk1 dataset
+    fractions, mean_errors_monk1 = prune_trees(monk1, m.monk1test, num_runs=1000)
+    # Run for monk3 dataset
+    fractions, mean_errors_monk3 = prune_trees(monk3, m.monk3test, num_runs=1000)
 
-    table_data = []
-    for fraction in [0.3, 0.4, 0.5, 0.6, 0.7, 0.8]:
-        monk1train, monk1val = partition(m.monk1, fraction)
-        monk3train, monk3val = partition(m.monk3, fraction)
+    # Plot for monk1
+    plt.plot(fractions, mean_errors_monk1, marker='o', label='MONK1')
+    # Plot for monk3
+    plt.plot(fractions, mean_errors_monk3, marker='o', label='MONK3')
 
-        t1 = d.buildTree(monk1train, m.attributes)
-        t3 = d.buildTree(monk3train, m.attributes)
-        
-
-
-
+    plt.xlabel('Fraction of Training Data')
+    plt.ylabel('Mean Error')
+    plt.title('Pruning Performance vs Fraction of Training Data')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
 
 def main():
     # Assignment 1
-    assignment1()
+    # assignment1()  # Commented since not relevant here
 
     # Assignment 3
-    assignment3()
+    # assignment3()  # Commented since not relevant here
 
     # Assignment 5
-    assignment5()
+    # assignment5()  # Commented since not relevant here
 
     # Assignment 7
     assignment7()
 
-if __name__ == "__main__":
+# Call main
+if __name__ == '__main__':
     main()
