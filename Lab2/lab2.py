@@ -36,19 +36,39 @@ def rbf_kernel(x, y, sigma):
     return np.exp(-np.linalg.norm(x-y)**2 / (2*sigma**2))
 
 
-def kernel_matrix(kernel_func):
-    K = np.zeros((N, N))
-    for i in range(N):
-        for j in range(N):
-            K[i, j] = targets[i] * targets[j] * kernel_func(inputs[i], inputs[j])
-    return K
+# Global kernel matrix
+K = np.zeros((N, N))
+for i in range(N):
+    for j in range(N):
+        K[i, j] = targets[i] * targets[j] * linear_kernel(inputs[i], inputs[j])
 
-def objective(alpha, precomputed_K):
-    return -np.sum(alpha) + 0.5 * np.dot(alpha, np.dot(precomputed_K, alpha))
+def objective(alpha):
+    return -np.sum(alpha) + 0.5 * np.dot(alpha, np.dot(K, alpha))
 
-
+# 0 ≤αi ≤C ∀i and ∑alpha_i*t_i = 0 
 def zerofun(alpha):
-    return np.sum(alpha, targets)
+    return np.dot(alpha, targets)
 
 
+XC = ({'type': 'eq', 'fun': zerofun})
+start = np.zeros(N)
+C = 1
+B = [(0, C) for b in range(N)]
 
+
+ret = minimize(objective, start, bounds=B, constraints=XC)
+alpha = ret['x']
+
+print("success" if ret['success'] else "failed")
+
+for i in range(len(alpha)):
+    if abs(alpha[i]) > 1e-5:
+        non_zeros=(alpha[i],inputs[i],targets[i])
+
+def b_value(non_zeros):
+    b = 0
+    for i in range(len(non_zeros)):
+        pass
+
+b = b_value(non_zeros)
+print(b)
