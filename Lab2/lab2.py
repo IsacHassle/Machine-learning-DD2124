@@ -14,7 +14,7 @@ def polynomial_kernel(x, y, p=3):
     return (np.dot(x, y) + 1) ** p
 
 # Radial basis function (RBF) kernel
-def rbf_kernel(x, y, sigma=0.5):
+def rbf_kernel(x, y, sigma=3):
     return np.exp(-np.linalg.norm(x - y) ** 2 / (2 * sigma ** 2))
 
 # SVM objective function, one parameter so that the "minimize" function can find the value for alpha that minimizes the return
@@ -45,7 +45,7 @@ def indicator(s):
     return result - b_value(non_zeros)
 
 #global variable for the chosen kernel function to use
-kernel = rbf_kernel
+kernel = linear_kernel
 
 # Generate data for class A and class B
 # classA is a 20x2 matrix with 10 samples centered at [1.5, 0.5] and 10 samples centered at [-1.5, 0.5]
@@ -73,7 +73,7 @@ for i in range(N):
 
 # Set up parameters for minimize
 start = np.zeros(N)
-C = 1.0  # Slack variable C for soft margin SVM
+C = 1.5  # Slack variable C for soft margin SVM
 B = [(0, C) for b in range(N)]
 XC = {'type': 'eq', 'fun': zerofun}
 
